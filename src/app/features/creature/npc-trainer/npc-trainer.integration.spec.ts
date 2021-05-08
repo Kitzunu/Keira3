@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import Spy = jasmine.Spy;
@@ -32,7 +32,7 @@ describe('NpcTrainer integration tests', () => {
   originalRow1.SpellID = 1;
   originalRow2.SpellID = 2;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         NpcTrainerModule,
@@ -265,7 +265,7 @@ describe('NpcTrainer integration tests', () => {
       page.expectUniqueError();
     });
 
-    it('changing a value via SkillSelector should correctly work', async () => {
+    it('changing a value via SkillSelector should correctly work', waitForAsync(async () => {
       const field = 'ReqSkillLine';
       const sqliteQueryService = TestBed.inject(SqliteQueryService);
       spyOn(sqliteQueryService, 'query').and.returnValue(of(
@@ -299,7 +299,7 @@ describe('NpcTrainer integration tests', () => {
         '(1234, 1, 0, 0, 0, 0),\n' +
         '(1234, 2, 0, 0, 0, 0);'
       );
-    });
+    }));
   });
 });
 

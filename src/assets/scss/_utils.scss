@@ -5,14 +5,15 @@ pre {
 code.hljs {
   background-color: #efefef;
   padding: 10px;
+  min-height: 38px;
 }
 
 .form-check {
-  input.form-check-input, label.form-check-label {
+  input.form-check-input,
+  label.form-check-label {
     cursor: pointer;
   }
 }
-
 
 .btn:disabled {
   cursor: default;

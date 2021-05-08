@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import Spy = jasmine.Spy;
@@ -31,7 +31,7 @@ describe('GameobjectQuestitem integration tests', () => {
   originalRow1.Idx = 1;
   originalRow2.Idx = 2;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         GameobjectQuestitemModule,
@@ -211,7 +211,7 @@ describe('GameobjectQuestitem integration tests', () => {
       );
     });
 
-    it('combining add, edit and delete should correctly work', async () => {
+    it('combining add, edit and delete should correctly work', waitForAsync(async () => {
       page.addNewRow();
       expect(page.getEditorTableRowsCount()).toBe(4);
 
@@ -237,7 +237,7 @@ describe('GameobjectQuestitem integration tests', () => {
         '(1234, 1, 10, 0),\n' +
         '(1234, 3, 0, 0);'
       );
-    });
+    }));
 
     it('using the same row id for multiple rows should correctly show an error', () => {
       page.clickRowOfDatatable(2);

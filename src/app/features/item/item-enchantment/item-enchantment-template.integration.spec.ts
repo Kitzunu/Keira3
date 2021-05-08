@@ -1,6 +1,7 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
+import { ModalModule } from 'ngx-bootstrap/modal';
 import Spy = jasmine.Spy;
 
 import { ItemEnchantmentTemplateComponent } from './item-enchantment-template.component';
@@ -30,11 +31,12 @@ describe('ItemEnchantmentTemplate integration tests', () => {
   originalRow1.ench = 1;
   originalRow2.ench = 2;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         ItemEnchantmentTemplateModule,
         RouterTestingModule,
+        ModalModule.forRoot(),
       ],
       providers: [
         ItemHandlerService,

@@ -1,4 +1,4 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
@@ -23,7 +23,7 @@ import { version } from '../../../package.json';
 
 describe('AppComponent', () => {
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [
         MainWindowComponent,
@@ -67,7 +67,8 @@ describe('AppComponent', () => {
     it('should correctly react on connectionLost$ [connection lost]', () => {
       const { fixture, toastrService, connectionLostSubject } = setup();
       fixture.detectChanges();
-      spyOnAllFunctions(toastrService);
+      spyOn(toastrService, 'success');
+      spyOn(toastrService, 'error');
 
       connectionLostSubject.next(false);
       connectionLostSubject.next(false);
@@ -81,7 +82,8 @@ describe('AppComponent', () => {
     it('should correctly react on connectionLost$ [reconnected]', () => {
       const { fixture, connectionLostSubject, toastrService } = setup();
       fixture.detectChanges();
-      spyOnAllFunctions(toastrService);
+      spyOn(toastrService, 'success');
+      spyOn(toastrService, 'error');
 
       connectionLostSubject.next(true);
 

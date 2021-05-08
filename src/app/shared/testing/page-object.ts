@@ -71,6 +71,17 @@ export abstract class PageObject<ComponentType> {
     this.fixture.detectChanges();
   }
 
+  getLabel(fieldName: string): HTMLLabelElement {
+    return this.query<HTMLLabelElement>(`.control-label[for="${fieldName}"]`);
+  }
+  getInput(fieldName: string): HTMLInputElement {
+    return this.query<HTMLInputElement>(`input.form-control[id="${fieldName}"]`);
+  }
+  expectInputVisible(fieldName: string) {
+    expect(this.getLabel(fieldName)).toBeDefined();
+    expect(this.getInput(fieldName)).toBeDefined();
+  }
+
   clickElement(element: HTMLElement): void {
     element.click();
     this.fixture.detectChanges();
@@ -87,7 +98,7 @@ export abstract class PageObject<ComponentType> {
     return element.hasAttribute('hidden');
   }
 
-  queryOutisdeComponent<T extends HTMLElement>(selector: string, assert = true): T {
+  queryOutsideComponent<T extends HTMLElement>(selector: string, assert = true): T {
     const element: T = document.querySelector<T>(selector);
 
     if (assert) {
@@ -169,6 +180,25 @@ export abstract class PageObject<ComponentType> {
 
   clickRowOfDatatableInModal(rowIndex: number) {
     this.clickElement(this.getCellOfDatatableInModal(rowIndex, 0));
+  }
+
+
+  /*** ngx-bootstrap Tabs utilities ***/
+
+  getTab(tabsetId: string, tabId: string): HTMLElement {
+    return this.query(`tabset#${tabsetId} a#${tabId}-link`);
+  }
+
+  expectTabActive(tab: HTMLElement): void {
+    expect(tab).toHaveClass('active');
+  }
+
+  expectTabInactive(tab: HTMLElement): void {
+    expect(tab).not.toHaveClass('active');
+  }
+
+  expectTabHeadToContain(tab: HTMLElement, text: string): void {
+    expect(tab.innerText).toContain(text);
   }
 }
 

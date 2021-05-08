@@ -1,4 +1,4 @@
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import Spy = jasmine.Spy;
@@ -18,7 +18,7 @@ class CreatureQueststarterPage extends MultiRowEditorPageObject<CreatureQueststa
 describe('CreatureQueststarter integration tests', () => {
   const id = 1234;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
@@ -258,7 +258,7 @@ describe('CreatureQueststarter integration tests', () => {
       page.removeElement();
     });
 
-    it('changing a value via CreatureSelector should correctly work', async () => {
+    it('changing a value via CreatureSelector should correctly work', waitForAsync(async () => {
       const { page, fixture } = setup(false);
       const field = 'id';
       const mysqlQueryService = TestBed.inject(MysqlQueryService);
@@ -295,7 +295,7 @@ describe('CreatureQueststarter integration tests', () => {
         '(2, 1234);'
       );
       page.removeElement();
-    });
+    }));
   });
 });
 

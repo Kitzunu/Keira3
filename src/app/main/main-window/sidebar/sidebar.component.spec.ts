@@ -1,5 +1,5 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { instance, reset } from 'ts-mockito';
+import { TestBed, waitForAsync } from '@angular/core/testing';
+import { instance } from 'ts-mockito';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { SidebarComponent } from './sidebar.component';
@@ -18,6 +18,11 @@ import { GameobjectHandlerService } from '../../../features/gameobject/gameobjec
 import { SaiGameobjectHandlerService } from '../../../features/gameobject/sai-gameobject-handler.service';
 import { GossipHandlerService } from '../../../features/gossip/gossip-handler.service';
 import { ConditionsHandlerService } from '../../../features/conditions/conditions-handler.service';
+import { ReferenceLootHandlerService } from '../../../features/other-loots/reference-loot/reference-loot-handler.service';
+import { SpellLootHandlerService } from '../../../features/other-loots/spell-loot/spell-loot-handler.service';
+import { FishingLootHandlerService } from '../../../features/other-loots/fishing-loot/fishing-loot-handler.service';
+import { MailLootHandlerService } from '../../../features/other-loots/mail-loot/mail-loot-handler.service';
+import { SpellHandlerService } from '../../../features/spell/spell-handler.service';
 
 class SidebarComponentPage extends PageObject<SidebarComponent> {
   get toggleSidebarBtn() { return this.query<HTMLButtonElement>('.sidebar-button'); }
@@ -26,12 +31,8 @@ class SidebarComponentPage extends PageObject<SidebarComponent> {
 }
 
 describe('SidebarComponent', () => {
-  let component: SidebarComponent;
-  let fixture: ComponentFixture<SidebarComponent>;
-  let page: SidebarComponentPage;
-  let sidebarService: SidebarService;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         SidebarModule,
@@ -48,22 +49,30 @@ describe('SidebarComponent', () => {
         SaiGameobjectHandlerService,
         GossipHandlerService,
         ConditionsHandlerService,
+        ReferenceLootHandlerService,
+        SpellLootHandlerService,
+        FishingLootHandlerService,
+        MailLootHandlerService,
+        SpellHandlerService,
       ]
     })
     .compileComponents();
   }));
 
-  beforeEach(() => {
-    sidebarService = TestBed.inject(SidebarService);
+  const setup = () => {
+    const sidebarService = TestBed.inject(SidebarService);
 
-    fixture = TestBed.createComponent(SidebarComponent);
-    page = new SidebarComponentPage(fixture);
-    component = fixture.componentInstance;
+    const fixture = TestBed.createComponent(SidebarComponent);
+    const page = new SidebarComponentPage(fixture);
+    const component = fixture.componentInstance;
     fixture.autoDetectChanges(true);
     fixture.detectChanges();
-  });
+
+    return { sidebarService, fixture, page, component };
+  };
 
   it('clicking the toggle button should correctly change the toggled status', () => {
+    const { sidebarService, page } = setup();
     sidebarService.setSidebarState(false);
 
     page.clickElement(page.toggleSidebarBtn);
@@ -71,9 +80,12 @@ describe('SidebarComponent', () => {
 
     page.clickElement(page.toggleSidebarBtn);
     expect(sidebarService.getSidebarState()).toBe(false);
+
+    page.removeElement();
   });
 
   it('toggling a section should correctly work', () => {
+    const { page, component } = setup();
     component.menuStates.creature = 'down';
 
     page.clickElement(page.creatureEditorToggle);
@@ -81,9 +93,12 @@ describe('SidebarComponent', () => {
 
     page.clickElement(page.creatureEditorToggle);
     expect(component.menuStates.creature).toBe('down');
+
+    page.removeElement();
   });
 
   it('collapse all button should correctly work ', () => {
+    const { page, component } = setup();
     component.menuStates.creature = 'down';
     component.menuStates.quest = 'down';
 
@@ -94,19 +109,18 @@ describe('SidebarComponent', () => {
         expect(component.menuStates[key]).toEqual('up');
       }
     }
+
+    page.removeElement();
   });
 
   it('reload the app on logout', () => {
+    const { page, component } = setup();
     const reloadSpy = spyOn(TestBed.inject(LocationService), 'reload');
 
     component.logout();
 
     expect(reloadSpy).toHaveBeenCalledTimes(1);
-  });
 
-  afterEach(() => {
     page.removeElement();
-    reset(MockedElectronService);
-    reset(MockedMysqlService);
   });
 });

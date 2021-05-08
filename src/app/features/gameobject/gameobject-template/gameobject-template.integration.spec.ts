@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import Spy = jasmine.Spy;
@@ -33,7 +33,7 @@ describe('GameobjectTemplate integration tests', () => {
   const originalEntity = new GameobjectTemplate();
   originalEntity.entry = id;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         GameobjectTemplateModule,
@@ -148,7 +148,7 @@ describe('GameobjectTemplate integration tests', () => {
       page.expectFullQueryToContain('35');
     });
 
-    it('changing a value via SingleValueSelector should correctly work', async () => {
+    it('changing a value via SingleValueSelector should correctly work', waitForAsync(async () => {
       const field = 'type';
       page.clickElement(page.getSelectorBtn(field));
       await page.whenReady();
@@ -172,7 +172,7 @@ describe('GameobjectTemplate integration tests', () => {
         '(' + id + ', 7, 0, \'\', \'\', \'\', \'\', 1, 0, 0, 0, 0, 0, 0, 0, ' +
         '0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, \'\', \'\', 0);'
       );
-    });
+    }));
   });
 
 });

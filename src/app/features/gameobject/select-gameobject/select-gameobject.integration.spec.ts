@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
@@ -28,7 +28,7 @@ describe('SelectGameobject integration tests', () => {
 
   const value = 1200;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         SelectGameobjectModule,
@@ -58,7 +58,7 @@ describe('SelectGameobject integration tests', () => {
     fixture.detectChanges();
   });
 
-  it('should correctly initialise', async () => {
+  it('should correctly initialise', waitForAsync(async () => {
     await fixture.whenStable();
     expect(page.createInput.value).toEqual(`${component.customStartingId}`);
     page.expectNewEntityFree();
@@ -68,9 +68,9 @@ describe('SelectGameobject integration tests', () => {
     expect(page.queryWrapper.innerText).toContain(
       'SELECT * FROM `gameobject_template` LIMIT 50'
     );
-  });
+  }));
 
-  it('should correctly behave when inserting and selecting free id', async () => {
+  it('should correctly behave when inserting and selecting free id', waitForAsync(async () => {
     await fixture.whenStable();
     querySpy.calls.reset();
     querySpy.and.returnValue(of([]));
@@ -88,9 +88,9 @@ describe('SelectGameobject integration tests', () => {
     expect(navigateSpy).toHaveBeenCalledTimes(1);
     expect(navigateSpy).toHaveBeenCalledWith(['gameobject/gameobject-template']);
     page.expectTopBarCreatingNew(value);
-  });
+  }));
 
-  it('should correctly behave when inserting an existing entity', async () => {
+  it('should correctly behave when inserting an existing entity', waitForAsync(async () => {
     await fixture.whenStable();
     querySpy.calls.reset();
     querySpy.and.returnValue(of(
@@ -104,7 +104,7 @@ describe('SelectGameobject integration tests', () => {
       `SELECT * FROM \`gameobject_template\` WHERE (entry = ${value})`
     );
     page.expectEntityAlreadyInUse();
-  });
+  }));
 
   for (const { testId, id, name, limit, expectedQuery } of [
     {

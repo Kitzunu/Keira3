@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
@@ -29,7 +29,7 @@ describe('SaiSearchExisting integration tests', () => {
   let querySpy: Spy;
   let navigateSpy: Spy;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         SaiSearchExistingModule,
@@ -55,12 +55,12 @@ describe('SaiSearchExisting integration tests', () => {
     fixture.detectChanges();
   });
 
-  it('should correctly initialise', async () => {
+  it('should correctly initialise', waitForAsync(async () => {
     await fixture.whenStable();
-      expect(page.queryWrapper.innerText).toContain(
-        'SELECT * FROM `smart_scripts` LIMIT 50'
-      );
-  });
+    expect(page.queryWrapper.innerText).toContain(
+      'SELECT `entryorguid`, `source_type` FROM `smart_scripts` GROUP BY entryorguid, source_type LIMIT 50'
+    );
+  }));
 
   for (const { testId, entryorguid, source_type, limit, expectedQuery } of [
     {

@@ -6,6 +6,8 @@ import { DashboardComponent } from '../features/dashboard/dashboard.component';
 import { SelectCreatureComponent } from '../features/creature/select-creature/select-creature.component';
 import { CreatureTemplateComponent } from '../features/creature/creature-template/creature-template.component';
 import { CreatureTemplateAddonComponent } from '../features/creature/creature-template-addon/creature-template-addon.component';
+import { CreatureTemplateResistanceComponent } from '../features/creature/creature-template-resistance/creature-template-resistance.component';
+import { CreatureTemplateSpellComponent } from '../features/creature/creature-template-spell/creature-template-spell.component';
 import { NpcVendorComponent } from '../features/creature/npc-vendor/npc-vendor.component';
 import { CreatureEquipTemplateComponent } from '../features/creature/creature-equip-template/creature-equip-template.component';
 import {
@@ -64,6 +66,20 @@ import { SaiFullEditorComponent } from '../features/smart-scripts/sai-full-edito
 import { SaiGameobjectComponent } from '../features/gameobject/sai-gameobject/sai-gameobject.component';
 import { ConditionsComponent } from '../features/conditions/edit-conditions/conditions.component';
 import { SqlEditorComponent } from '../features/sql-editor/sql-editor.component';
+import { SelectReferenceLootComponent } from '../features/other-loots/reference-loot/select-reference-loot.component';
+import { ReferenceLootTemplateComponent } from '../features/other-loots/reference-loot/reference-loot-template.component';
+import { ReferenceLootHandlerService } from '../features/other-loots/reference-loot/reference-loot-handler.service';
+import { SpellLootTemplateComponent } from '../features/other-loots/spell-loot/spell-loot-template.component';
+import { SpellLootHandlerService } from '../features/other-loots/spell-loot/spell-loot-handler.service';
+import { SelectSpellLootComponent } from '../features/other-loots/spell-loot/select-spell-loot.component';
+import { SelectFishingLootComponent } from '../features/other-loots/fishing-loot/select-fishing-loot.component';
+import { FishingLootTemplateComponent } from '../features/other-loots/fishing-loot/fishing-loot-template.component';
+import { FishingLootHandlerService } from '../features/other-loots/fishing-loot/fishing-loot-handler.service';
+import { SelectMailLootComponent } from '../features/other-loots/mail-loot/select-mail-loot.component';
+import { MailLootTemplateComponent } from '../features/other-loots/mail-loot/mail-loot-template.component';
+import { MailLootHandlerService } from '../features/other-loots/mail-loot/mail-loot-handler.service';
+import { SelectSpellComponent } from '../features/spell/select-spell/select-spell.component';
+import { SpellDbcComponent } from '../features/spell/spell-dbc/spell-dbc.component';
 
 const routes: Routes = [
   {
@@ -89,6 +105,16 @@ const routes: Routes = [
       {
         path: 'creature-template-addon',
         component: CreatureTemplateAddonComponent,
+        canActivate: [CreatureHandlerService],
+      },
+      {
+        path: 'creature-template-resistance',
+        component: CreatureTemplateResistanceComponent,
+        canActivate: [CreatureHandlerService],
+      },
+      {
+        path: 'creature-template-spell',
+        component: CreatureTemplateSpellComponent,
         canActivate: [CreatureHandlerService],
       },
       {
@@ -276,6 +302,47 @@ const routes: Routes = [
     ]
   },
   {
+    path: 'other-loots',
+    children: [
+      {
+        path: 'select-reference',
+        component: SelectReferenceLootComponent,
+      },
+      {
+        path: 'reference',
+        component: ReferenceLootTemplateComponent,
+        canActivate: [ReferenceLootHandlerService],
+      },
+      {
+        'path': 'select-spell',
+        'component': SelectSpellLootComponent,
+      },
+      {
+        path: 'spell',
+        component: SpellLootTemplateComponent,
+        canActivate: [SpellLootHandlerService],
+      },
+      {
+        'path': 'select-fishing',
+        'component': SelectFishingLootComponent,
+      },
+      {
+        path: 'fishing',
+        component: FishingLootTemplateComponent,
+        canActivate: [FishingLootHandlerService],
+      },
+      {
+        'path': 'select-mail',
+        'component': SelectMailLootComponent,
+      },
+      {
+        path: 'mail',
+        component: MailLootTemplateComponent,
+        canActivate: [MailLootHandlerService],
+      },
+    ]
+  },
+  {
     path: 'gossip',
     children: [
       {
@@ -326,10 +393,23 @@ const routes: Routes = [
       },
     ]
   },
+  {
+    path: 'spell',
+    children: [
+      {
+        path: 'select',
+        component: SelectSpellComponent,
+      },
+      {
+        path: 'spell-dbc',
+        component: SpellDbcComponent,
+      },
+    ]
+  },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {useHash: true})],
+  imports: [RouterModule.forRoot(routes, { useHash: true, relativeLinkResolution: 'legacy' })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

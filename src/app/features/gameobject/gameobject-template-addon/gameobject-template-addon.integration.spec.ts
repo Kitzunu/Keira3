@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import Spy = jasmine.Spy;
@@ -29,7 +29,7 @@ describe('GameobjectTemplateAddon integration tests', () => {
   const originalEntity = new GameobjectTemplateAddon();
   originalEntity.entry = id;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         GameobjectTemplateAddonModule,
@@ -128,7 +128,7 @@ describe('GameobjectTemplateAddon integration tests', () => {
 
     });
 
-    it('changing a value via FlagsSelector should correctly work', async () => {
+    it('changing a value via FlagsSelector should correctly work', waitForAsync(async () => {
       const field = 'flags';
       page.clickElement(page.getSelectorBtn(field));
       await page.whenReady();
@@ -151,7 +151,7 @@ describe('GameobjectTemplateAddon integration tests', () => {
         'INSERT INTO `gameobject_template_addon` (`entry`, `faction`, `flags`, `mingold`, `maxgold`) VALUES\n' +
         '(' + id + ', 0, 10, 0, 0);'
       );
-    });
+    }));
 
   });
 

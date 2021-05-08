@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import Spy = jasmine.Spy;
@@ -32,7 +32,7 @@ describe('GameobjectSpawn integration tests', () => {
   originalRow1.guid = 1;
   originalRow2.guid = 2;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         GameobjectSpawnModule,
@@ -314,7 +314,7 @@ describe('GameobjectSpawn integration tests', () => {
       page.expectUniqueError();
     });
 
-    it('changing a value via AreaSelector should correctly work', async () => {
+    it('changing a value via AreaSelector should correctly work', waitForAsync(async () => {
       const field = 'areaId';
       const sqliteQueryService = TestBed.inject(SqliteQueryService);
       spyOn(sqliteQueryService, 'query').and.returnValue(of(
@@ -348,7 +348,7 @@ describe('GameobjectSpawn integration tests', () => {
         '(1, 1234, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, \'\', 0),\n' +
         '(2, 1234, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, \'\', 0);'
       );
-    });
+    }));
   });
 });
 

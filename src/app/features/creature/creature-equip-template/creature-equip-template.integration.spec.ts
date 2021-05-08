@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import Spy = jasmine.Spy;
@@ -29,7 +29,7 @@ describe('CreatureEquipTemplate integration tests', () => {
   const originalEntity = new CreatureEquipTemplate();
   originalEntity.CreatureID = id;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         CreatureEquipTemplateModule,
@@ -139,7 +139,7 @@ describe('CreatureEquipTemplate integration tests', () => {
       );
     });
 
-    it('changing a value via ItemSelector should correctly work', async () => {
+    it('changing a value via ItemSelector should correctly work', waitForAsync(async () => {
 
       //  note: previously disabled because of:
       //  https://stackoverflow.com/questions/57336982/how-to-make-angular-tests-wait-for-previous-async-operation-to-complete-before-e
@@ -168,7 +168,7 @@ describe('CreatureEquipTemplate integration tests', () => {
         'INSERT INTO `creature_equip_template` (`CreatureID`, `ID`, `ItemID1`, `ItemID2`, `ItemID3`, `VerifiedBuild`) VALUES\n' +
         '(1234, 1, 1200, 0, 0, 0);'
       );
-    });
+    }));
   });
 });
 

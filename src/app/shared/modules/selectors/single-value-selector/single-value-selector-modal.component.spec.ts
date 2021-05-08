@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 
 import { SingleValueSelectorModalComponent } from './single-value-selector-modal.component';
@@ -10,7 +10,7 @@ describe('SingleValueSelectorModalComponent', () => {
 
   const value = 'myValue';
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [ SingleValueSelectorModule ],
       providers: [
@@ -33,6 +33,7 @@ describe('SingleValueSelectorModalComponent', () => {
   it('should properly handle config (if any)', () => {
     component.value = value;
     component.config = {
+      name: 'Mock Modal Name',
       options: [
         { name: 'option1', value: 'some value' },
         { name: 'option2', value },

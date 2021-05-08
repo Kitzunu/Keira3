@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 
 import { FlagsSelectorModalComponent } from './flags-selector-modal.component';
@@ -11,7 +11,7 @@ describe('FlagsSelectorModalComponent', () => {
   let fixture: ComponentFixture<FlagsSelectorModalComponent>;
   let flagsService: FlagsService;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [ FlagsSelectorModule ],
       providers: [
@@ -38,7 +38,7 @@ describe('FlagsSelectorModalComponent', () => {
     const flags: Flag[] = [{ bit: 1, name: 'my-flag' }];
     const value = 123;
     component.value = value;
-    component.config = { flags };
+    component.config = { name: 'Mock Modal Name', flags };
     const getBitsArraySpy = spyOn(flagsService, 'getBitsArray').and.returnValue(bits);
 
     component.ngOnInit();

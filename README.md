@@ -1,7 +1,7 @@
 # Keira3
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/e9d97b0240fd452487bfd5d3e55da96f)](https://app.codacy.com/app/FrancescoBorzi/Keira3?utm_source=github.com&utm_medium=referral&utm_content=azerothcore/Keira3&utm_campaign=Badge_Grade_Dashboard)
-[![Build Status](https://travis-ci.com/azerothcore/Keira3.svg?branch=master)](https://travis-ci.com/azerothcore/Keira3)
+[![Actions Status](https://github.com/azerothcore/Keira3/workflows/main/badge.svg)](https://github.com/azerothcore/Keira3/actions)
 [![Coverage Status](https://coveralls.io/repos/github/azerothcore/Keira3/badge.svg)](https://coveralls.io/github/azerothcore/Keira3)
 [![dependencies Status](https://david-dm.org/azerothcore/Keira3/status.svg)](https://david-dm.org/azerothcore/Keira3/)
 [![devDependencies Status](https://david-dm.org/francescoborzi/ngx-duration-picker/dev-status.svg)](https://david-dm.org/francescoborzi/ngx-duration-picker?type=dev)
@@ -35,9 +35,30 @@ If you don't have any, you can easily create one following [this guide](http://w
 
 Alternatively, you can use a public database of AzerothCore with read-only access. Details [here](https://github.com/azerothcore/forum/issues/84).
 
-## Development
+## How to install Keira3
+
+To use Keira3, you don't need to install any dependency. Just [download](https://github.com/azerothcore/Keira3/releases) and run it.
+
+If you are using Arch Linux you can find the package on [AUR](https://aur.archlinux.org/packages/keira3/)
+
+If you're using a MySQL8.0 database you might encounter this error:
+
+_Client does not support authentication protocol requested by server; consider upgrading MySQL client_
+
+Before logging using Keira in remember to run this query on your database for your desired users:
+
+```
+ALTER USER 'acore' IDENTIFIED WITH mysql_native_password BY 'acore';
+flush privileges;
+```
+
+[More information about this issue here](https://stackoverflow.com/questions/50093144/mysql-8-0-client-does-not-support-authentication-protocol-requested-by-server)
+
+## How to run Keira3 in development mode
 
 ### Dependencies
+
+**Note:** these are the dependencies if you want to run Keira3 in development mode. If you just want to use Keira3, download it from the [releases page](https://github.com/azerothcore/Keira3/releases).
 
 You need to first install [node](https://nodejs.org) in order to have `npm` available in your system.
 
@@ -62,7 +83,6 @@ This installation will take time and probably your PC will **reboot** during the
 
 ### Build
 
-
 To run the app in local development with hot reload:
 
 ```bash
@@ -82,5 +102,10 @@ More commands:
 |`npm run electron:mac`|  On a MAC OS, builds your application and generates a `.app` file of your application that can be run on Mac |
 |`npm run test-ci`|  Run unit tests once |
 |`npm run test`|  Run unit tests in watch mode |
+|`npm run e2e`|  Run e2e tests. It requires to run `npm run build:prod` first |
 
 **Note: Only /dist folder and node dependencies will be included in the executable.**
+
+### Learn
+
+- An overview of Keira3 internals is available [here](https://www.azerothcore.org/wiki/keira3-internals)

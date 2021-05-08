@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { NgModule } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -18,7 +18,6 @@ import { closeModalsAfterEach } from '@keira-testing/test-helpers';
 
 @NgModule({
   declarations: [ ItemSelectorModalComponent ],
-  entryComponents: [ ItemSelectorModalComponent ],
   imports: [
     CommonModule,
     BrowserModule,
@@ -39,7 +38,7 @@ describe('BaseSelectorBtnComponent', () => {
 
   const value = 'mock-value';
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ItemSelectorBtnComponent ],
       imports: [
